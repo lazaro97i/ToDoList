@@ -1,8 +1,9 @@
 import React from "react"
+import LoginForm from "../src/Components/LoginForm"
 
 const Home = () => {
   return (
-    <div className="font-[200px] text-white">Home</div>
+    <LoginForm />
   )
 }
 
