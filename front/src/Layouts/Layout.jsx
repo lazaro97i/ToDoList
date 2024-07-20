@@ -1,11 +1,19 @@
 import React, { Children } from 'react'
 import Nav from './Nav'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import NavLogOut from './NavLogOut'
 
 const Layout = () => {
+
+  const path = useLocation()
+
   return (
     <>
-      <Nav />
+      {
+        path.pathname == '/signin' || path.pathname == '/signup'
+        ?<NavLogOut />
+        :<Nav />
+      }
       <Outlet />
     </>
   )

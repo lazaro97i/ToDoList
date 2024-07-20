@@ -14,9 +14,11 @@
 input::placeholder{
   color: #c9c9c985;
 }
-
+#root{
+  padding-bottom: 5rem;
+}
 :root {
-  /* scrollbar-gutter: stable; */
+  scrollbar-gutter: stable;
   height: 100vh;
   overflow: auto;
   color-scheme: light dark;
