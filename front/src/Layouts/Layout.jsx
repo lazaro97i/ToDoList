@@ -10,7 +10,7 @@ const Layout = () => {
   return (
     <>
       {
-        path.pathname == '/signin' || path.pathname == '/signup'
+        path.pathname == '/' || path.pathname == '/signup'
         ?<NavLogOut />
         :<Nav />
       }

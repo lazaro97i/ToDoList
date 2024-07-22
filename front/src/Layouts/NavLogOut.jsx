@@ -22,7 +22,7 @@ const NavLogOut = () => {
         <div className='justify-end items-center flex'>
           <ul className='hidden lg:flex justify-center gap-16 w-full relative px-2'>
             <div className='relative'>
-              <Link to={'/signin'} className='font-[500] text-[1rem] rounded-md transition-all duration-200 li-license p-2 cursor-pointer flex gap-1 items-center max-h-[40px]'>
+              <Link to={'/'} className='font-[500] text-[1rem] rounded-md transition-all duration-200 li-license p-2 cursor-pointer flex gap-1 items-center max-h-[40px]'>
               <svg width={"25px"} fill="#22c55e" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M20,12a1,1,0,0,0-1-1H11.41l2.3-2.29a1,1,0,1,0-1.42-1.42l-4,4a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l4,4a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L11.41,13H19A1,1,0,0,0,20,12ZM17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V16a1,1,0,0,0-2,0v3a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V8a1,1,0,0,0,2,0V5A3,3,0,0,0,17,2Z"></path></g></svg>
                 Ingresar
               </Link>
