@@ -1,6 +1,7 @@
 import { User } from '../models/user_model.js'
-import bcrypts from 'bcryptjs'
+import bcryptjs from 'bcryptjs'
 import defaultResponse from '../config/response.js'
+import jwt from 'jsonwebtoken'
 
 const controller = {
 
@@ -62,7 +63,7 @@ const controller = {
       const new_user = await User.create({
         username: username,
         email: email,
-        password: bcrypts.hashSync(password, 10),
+        password: bcryptjs.hashSync(password, 10),
         role: role,
         photo: req.body.photo
       })
@@ -135,7 +136,60 @@ const controller = {
     }catch(ex){
       console.log(ex)
     }
-  }
+  },
+
+  signin: async (req, res) => {
+
+    const { password } = req.body
+    let { user } = req
+
+    try {
+      const verified = bcryptjs.compareSync(password, user.password)
+      if (verified) {
+        let token = jwt.sign(
+          { id: user.id },
+          process.env.KEY_JWT,
+          { expiresIn: 60 * 60 * 3 }
+        )
+        user = {
+          username: user.username,
+          photo: user.photo,
+          role: user.role
+        }
+        req.body.success = true
+        req.body.message = 'Sesión iniciada'
+        req.body.sc = 200
+        req.body.data = { user, token }
+        return defaultResponse(req, res)
+      }
+      req.body.success = false
+      req.body.sc = 400
+      req.body.message = "Contraseña incorrecta"
+      req.body.data = null
+      return defaultResponse(req, res)
+
+    } catch (e) {
+      console.log(e)
+    }
+  },
+
+  signinToken: async (req, res) => {
+    const { user } = req
+    let { token } = req.body
+    try {
+      token = jwt.verify(token, process.env.KEY_JWT)
+      req.body.success = true
+      req.body.sc = 200
+      req.body.data = {
+        username: user.username,
+        photo: user.photo,
+        role: user.role,
+      }
+      defaultResponse(req, res)
+    } catch (e) {
+      console.log(e)
+    }
+  },
 
 }
 

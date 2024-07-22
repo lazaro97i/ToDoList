@@ -5,10 +5,12 @@ const schema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, 'Titulo requerido'],
+    maxLength: 100
   },
   description: {
     type: String,
-    required: [true, 'Descripción requerida']
+    required: [true, 'Descripción requerida'],
+    maxLength: 200
   },
   day: {
     type: String,
