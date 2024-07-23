@@ -141,9 +141,8 @@ const controller = {
     const {data} = req.body
 
     try{
-      console.log(data)
       const task_updated = await Task.findByIdAndUpdate(
-        data.id, 
+        data.data, 
         {isActive: data.status}, 
         {new:true}
       )

@@ -14,15 +14,15 @@ const schema = new mongoose.Schema({
   },
   day: {
     type: String,
-    required: [true, 'Dia de inicio requerido']
+    required: [true, 'Dia de venimiento requerido']
   },
   month: {
     type: String,
-    required: [true, 'Mes de inicio requerido']
+    required: [true, 'Mes de venimiento requerido']
   },
   year: {
     type: String,
-    required: [true, 'Año de inicio requerido']
+    required: [true, 'Año de venimiento requerido']
   },
   isActive: {
     type: Boolean, // true seria estado pendiente y false seria estado completo

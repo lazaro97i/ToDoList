@@ -29,7 +29,7 @@ const controller = {
 
   readOne: async (req, res) => {
 
-    const {userId} = req.body
+    const {userId} = req.params
 
     try{
       const user = await User.findById(userId, '-__v -createdAt -updatedAt')
@@ -37,7 +37,7 @@ const controller = {
         req.body.success = true
         req.body.sc = 200
         req.body.message = 'Usuario encontrado :)'
-        req.body.task = user
+        req.body.data = user
         return defaultResponse(req, res)
       }else{
         req.body.success = false
@@ -88,17 +88,22 @@ const controller = {
       }
 
     }catch(ex){
-      console.log(ex)
+        console.log(ex)
+        req.body.success = false
+        req.body.sc = 400
+        req.body.message = ex.message
+        req.body.data = null
+        return defaultResponse(req, res)
     }
 
   },
 
   deleteOne: async (req, res) =>{
 
-    const {userId} = req.body
+    const {id} = req.params
 
     try{
-      const user_deleted = await User.findByIdAndDelete(userId)
+      const user_deleted = await User.findByIdAndDelete(id)
       if(user_deleted){
         req.body.success = true
         req.body.sc = 200
@@ -120,11 +125,14 @@ const controller = {
 
   updateOne: async (req, res) =>{
 
-    const {userId} = req.body
     const {data} = req.body
 
     try{
-      const user_updated = await User.findByIdAndUpdate(userId, data, {new:true})
+      const user_updated = await User.findByIdAndUpdate(
+        data.id, 
+        data.data, 
+        {new:true}
+      )
       if(user_updated){
         req.body.success = true
         req.body.sc = 200
