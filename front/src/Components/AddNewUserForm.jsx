@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import userActions from '../Store/users_store/actions'
@@ -11,8 +11,9 @@ const {signUp} = userActions
 const AddNewUserForm = () => {
 
   const path = useLocation()
+  const authStore = useSelector(store=>store.auth)
 
-  const inpRole = useRef(null)
+  const [role, setRole] = useState('USER_ROLE')
   const inpUserName = useRef(null)
   const inpEmail = useRef(null)
   const inpPass = useRef(null)
@@ -42,6 +43,10 @@ const AddNewUserForm = () => {
       toast.error('Debe repetir la contraseña')
       return
     }
+    if(inpPassRepeat.current.value.length < 6 || inpPass.current.value.length < 6){
+      toast.error('La contraseña debe contener al menos 6 caracteres')
+      return
+    }
 
     if(inpPass.current.value != inpPassRepeat.current.value){
       toast.error('Las contraseñas ingresadas no coinciden')
@@ -54,11 +59,16 @@ const AddNewUserForm = () => {
     data.username=inpUserName.current.value
     data.email=inpEmail.current.value
     data.password=inpPass.current.value
+    data.role = role
 
     try{
       const res = await dispatch(signUp(data))
+      console.log(res)
       if(res?.payload?.success){
         toast.success(res?.payload?.message)
+        if(authStore?.auth?.role === 'ADMIN_ROLE'){
+          navigate("/addUser")
+        }
         navigate("/")
       }else{
         toast.error(res?.payload?.message)
@@ -84,11 +94,11 @@ const AddNewUserForm = () => {
         </label>
         <label htmlFor="password" className='flex flex-col self-start w-full mt-10'>
           Contraseña: 
-          <input ref={inpPass} type="password" name='password' id='password' className='bg-transparent border border-green-500 rounded-md h-[40px] pl-4 outline-none mt-3' placeholder='Ingrese contraseña'/>
+          <input ref={inpPass} type="password" min={6} name='password' id='password' className='bg-transparent border border-green-500 rounded-md h-[40px] pl-4 outline-none mt-3' placeholder='Ingrese contraseña'/>
         </label>
         <label htmlFor="password" className='flex flex-col self-start w-full mt-10'>
           Repetir contraseña: 
-          <input ref={inpPassRepeat} type="password" name='repeatPassword' id='repeatPassword' className='bg-transparent border border-green-500 rounded-md h-[40px] pl-4 outline-none mt-3' placeholder='Ingrese contraseña'/>
+          <input ref={inpPassRepeat} type="password" min={6} name='repeatPassword' id='repeatPassword' className='bg-transparent border border-green-500 rounded-md h-[40px] pl-4 outline-none mt-3' placeholder='Ingrese contraseña'/>
         </label>
         <label htmlFor="username" className='flex flex-col self-start w-full mt-10'>
           URL Foto: 
@@ -100,11 +110,11 @@ const AddNewUserForm = () => {
           <span className='flex w-4/5 max-w-[270px] md:max-w-[350px] mb-5'>Rol de usuario:</span>
           <div className='flex gap-10 justify-center'>
             <label>
-              <input className='peer hidden' type="radio" value='ADMIN_ROLE' name='role' />
+              <input onClick={(e)=>{setRole(e.target.value)}} className='peer hidden' type="radio" value='ADMIN_ROLE' name='role' />
               <p className='peer-checked:bg-green-600 peer-checked:text-white cursor-pointer bg-transparent py-1 w-[100px] text-center rounded-md border border-green-600 peer-checked:border-[#f1f8fe]'>Admin</p>
             </label>
             <label>
-              <input className='peer hidden' type="radio" value='USER_ROLE' name='role' />
+              <input onClick={(e)=>{setRole(e.target.value)}} className='peer hidden' type="radio" value='USER_ROLE' name='role' defaultChecked />
               <p className='peer-checked:bg-green-600 peer-checked:text-white cursor-pointer bg-transparent py-1 w-[100px] text-center rounded-md border border-green-600 peer-checked:border-[#f1f8fe]'>Usuario</p>
             </label>
           </div>

@@ -5,7 +5,11 @@ const {
   signIn,
   signInToken,
   signOut,
-  signUp
+  signUp,
+  getAllUsers,
+  getOne,
+  updateOne,
+  deleteOne
 } = userActions
 
 const initialState = {
@@ -57,6 +61,85 @@ const userReducer = createReducer(initialState, (builder) => {
       return newState
     })
     .addCase(signUp.rejected, (state, action) => {
+      console.log(action)
+      let newState = {
+        user: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(getAllUsers.fulfilled, (state, action) => {
+      let newState = {
+        users: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(getAllUsers.rejected, (state, action) => {
+      console.log(action)
+      let newState = {
+        users: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(getOne.fulfilled, (state, action) => {
+      let newState = {
+        users: state.users,
+        user: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(getOne.rejected, (state, action) => {
+      console.log(action)
+      let newState = {
+        user: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(updateOne.fulfilled, (state, action) => {
+      let newState = {
+        users: state.users,
+        user: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(updateOne.rejected, (state, action) => {
+      console.log(action)
+      let newState = {
+        user: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(deleteOne.fulfilled, (state, action) => {
+      let newState = {
+        users: state.users,
+        user: action.payload.response,
+        message: action.payload.message,
+        success: action.payload.success,
+        status: action.payload.status
+      }
+      return newState
+    })
+    .addCase(deleteOne.rejected, (state, action) => {
       console.log(action)
       let newState = {
         user: action.payload.response,

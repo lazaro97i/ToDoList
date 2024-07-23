@@ -18,7 +18,6 @@ const Layout = () => {
 
   useEffect(() => {
     let token = localStorage?.getItem('userToken')
-    console.log(authStore);
     if (authStore?.success) {
       setTokenLogin(token)
       setIsLogged(true)
@@ -31,7 +30,18 @@ const Layout = () => {
       setIsLogged(false)
       navigate('/')
     }
-  }, [authStore?.auth, isLogged])
+  }, [authStore?.auth, isLogged,path.pathname])
+
+  useEffect(()=>{
+    let url = path.pathname
+    if(url === '/addUser' || url === '/adminUser'){
+      if(authStore?.auth?.role !== 'ADMIN_ROLE'){
+        navigate("/home")
+      }
+    }
+
+    
+  },[path.pathname])
 
 
   return (

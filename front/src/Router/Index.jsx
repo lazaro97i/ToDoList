@@ -4,6 +4,7 @@ import Home from "../Pages/Home"
 import AddUser from "../Pages/AddUser"
 import Register from "../Pages/Register"
 import Signin from "../Pages/Signin"
+import AdminUsers from "../Pages/AdminUsers"
 
 const router = createBrowserRouter([
 
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         element: <Register />,
         path: '/signup'
+      },
+      {
+        element: <AdminUsers />,
+        path: '/adminUsers'
       }
     ]
   }

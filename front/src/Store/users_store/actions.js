@@ -48,7 +48,6 @@ const signInToken = createAsyncThunk('user/signInToken', async(data)=>{
       data,
       sendAuth()
     )
-    console.log(user.success)
     return{
       response: user.data.response,
       message: user.data.message,
@@ -94,7 +93,8 @@ const signOut = createAsyncThunk('user/signOut', async()=>{
 
 const signUp = createAsyncThunk('user/signUp', async(data)=>{
 
-  try{
+  console.log(data);
+  try{  
     const user = await axios.post(
       `${API_URL}/user/signup`,
       {data: data}
@@ -116,13 +116,115 @@ const signUp = createAsyncThunk('user/signUp', async(data)=>{
 
 })
 
+const getAllUsers = createAsyncThunk('user/getAll', async()=>{
+
+  try{
+    const user = await axios.get(
+      `${API_URL}/user/`,
+      sendAuth()
+    )
+    return{
+      response: user.data.response,
+      message: user.data.message,
+      success: user.data.success,
+      status: user.status
+    }
+  }catch(ex){
+    console.log(ex)
+    return {
+      response: ex.response.data.response,
+      message: ex.response.data.message,
+      success: ex.response.data.success
+    }
+  }
+
+})
+
+const getOne = createAsyncThunk('user/getOne', async(id)=>{
+
+  try{
+    const user = await axios.get(
+      `${API_URL}/user/get_user/${id.id}`,
+      sendAuth()
+    )
+    return{
+      response: user.data.response,
+      message: user.data.message,
+      success: user.data.success,
+      status: user.status
+    }
+  }catch(ex){
+    console.log(ex)
+    return {
+      response: ex.response.data.response,
+      message: ex.response.data.message,
+      success: ex.response.data.success
+    }
+  }
+
+})
+
+const deleteOne = createAsyncThunk('user/deleteOne', async(id)=>{
+
+  try{  
+    const user = await axios.delete(
+      `${API_URL}/user/${id}`,
+      sendAuth()
+    )
+    return{
+      response: user.data.response,
+      message: user.data.message,
+      success: user.data.success,
+      status: user.status
+    }
+  }catch(ex){
+    console.log(ex)
+    return{
+      response: ex.response.data.response,
+      message: ex.response.data.message,
+      success: ex.response.data.success
+    }
+  }
+
+})
+const updateOne = createAsyncThunk('user/updateOne', async(data, id)=>{
+  console.log(data)
+  console.log(id)
+  try{  
+    const user = await axios.put(
+      `${API_URL}/user/`,
+      {data: data, userId: id},
+      sendAuth()
+    )
+    return{
+      response: user.data.response,
+      message: user.data.message,
+      success: user.data.success,
+      status: user.status
+    }
+  }catch(ex){
+    console.log(ex)
+    return{
+      response: ex.response.data.response,
+      message: ex.response.data.message,
+      success: ex.response.data.success
+    }
+  }
+
+})
+
+
 
 
 const userActions = {
   signIn,
   signInToken,
   signOut,
-  signUp
+  signUp,
+  getAllUsers,
+  getOne,
+  updateOne,
+  deleteOne
 }
 
 export default userActions

@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import userActions from '../Store/users_store/actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import toast from 'react-hot-toast'
 
 const {signOut} = userActions
@@ -25,7 +25,6 @@ const Nav = (user) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [nav, setNav] = useState(false)
-  const authUser = useSelector(store=> store.auth)
 
   const toggleNav = (e) => {
     setNav(!nav)
