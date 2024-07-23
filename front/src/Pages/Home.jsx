@@ -136,7 +136,7 @@ const Home = () => {
                       <strong onClick={() => { setModalEdit(true), setTaskId(t._id) }} id={`title${i}`} className="text-xl cursor-pointer hover:underline transition-all duration-300">{t.title}</strong>
                       <p id={`desc${i}`} className=" opacity-60">{t.description}</p>
                       <div className="w-full mt-3 flex justify-between">
-                        <p id={`date${i}`}>Inicio: {t.day}/{t.month}/{t.year}</p>
+                        <p id={`date${i}`}>Venimiento: {t.day}/{t.month}/{t.year}</p>
                         <p onClick={() => { setStatus(t._id, !t.isActive) }} id={`status${i}`} className={`font-[600] ${t.isActive ? 'text-yellow-500' : 'text-green-500'} no-underline z-10 hover:bg-green-700 cursor-pointer hover:text-white px-1 rounded transition-all duration-300`}>Pendiente</p>
                       </div>
                     </div>
@@ -144,7 +144,7 @@ const Home = () => {
                       <strong onClick={() => { setModalEdit(true), setTaskId(t._id) }} id={`title${i}`} className="text-xl cursor-pointer transition-all duration-300 line-through">{t.title}</strong>
                       <p id={`desc${i}`} className=" opacity-60 line-through">{t.description}</p>
                       <div className="w-full mt-3 flex justify-between">
-                        <p id={`date${i}`} className="line-through">Inicio: {t.day}/{t.month}/{t.year}</p>
+                        <p id={`date${i}`} className="line-through">Venimiento: {t.day}/{t.month}/{t.year}</p>
                         <p id={`status${i}`} onClick={() => { setStatus(t._id, !t.isActive) }} className={`font-[600] text-green-500 cursor-pointer px-1 rounded hover:bg-yellow-500 hover:text-black transition-all duration-300`}>Completa</p>
                       </div>
                     </div>
