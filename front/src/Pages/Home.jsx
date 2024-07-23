@@ -64,6 +64,7 @@ const Home = () => {
       status = true
     }
     try {
+      setLoading(true)
       const res = await dispatch(SetDone({ data: id, status: status }))
       res
       if (res?.payload?.success) {
@@ -72,6 +73,8 @@ const Home = () => {
       }
     } catch (ex) {
       console.log(ex)
+    }finally{
+      setLoading(false)
     }
 
   }

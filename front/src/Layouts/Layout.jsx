@@ -28,9 +28,9 @@ const Layout = () => {
       dispatch(signInToken({ token: token }))
     } else if (!token) {
       setIsLogged(false)
-      navigate('/')
+      // navigate('/')
     }
-  }, [authStore?.auth, isLogged,path.pathname])
+  }, [authStore?.auth,path.pathname])
 
   useEffect(()=>{
     let url = path.pathname
