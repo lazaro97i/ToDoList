@@ -1,4 +1,4 @@
-import { User } from '../models/users_model.js'
+import { User } from '../models/user_model.js'
 import passport from 'passport'
 import passportJwt from 'passport-jwt'
 

@@ -37,7 +37,7 @@ const controller = {
         req.body.success = true
         req.body.sc = 200
         req.body.message = 'Usuario encontrado :)'
-        req.body.data = user
+        req.body.task = user
         return defaultResponse(req, res)
       }else{
         req.body.success = false
@@ -53,19 +53,24 @@ const controller = {
 
   create: async (req, res) =>{
 
-    const {username, email, password, role} = req.body
-    
-    if(!req.body.photo|| req.body.photo == ''){
-      req.body.photo = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
+    const {data} = req.body
+
+    if(!data.photo || data.photo == '' || data.photo == null){
+      data.photo = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
     }
+    if(!data.role){
+      data.role = "USER_ROLE"
+    }
+
+    console.log(data)
 
     try{
       const new_user = await User.create({
-        username: username,
-        email: email,
-        password: bcryptjs.hashSync(password, 10),
-        role: role,
-        photo: req.body.photo
+        username: data.username,
+        email: data.email,
+        password: bcryptjs.hashSync(data.password, 10),
+        role: data.role,
+        photo: data.photo
       })
 
       if(new_user){
@@ -180,16 +185,31 @@ const controller = {
       token = jwt.verify(token, process.env.KEY_JWT)
       req.body.success = true
       req.body.sc = 200
+      req.body.message = 'Usuario autenticado :)'
       req.body.data = {
         username: user.username,
         photo: user.photo,
         role: user.role,
+        id: user.id
       }
       defaultResponse(req, res)
     } catch (e) {
       console.log(e)
     }
   },
+
+  signout: async (req, res) => {
+    const { user } = req
+    try {
+      req.body.success = true
+      req.body.sc = 200
+      req.body.message = 'Sesión terminada'
+      req.body.data = null
+      defaultResponse(req, res)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
 }
 
